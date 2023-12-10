@@ -1,0 +1,5 @@
+(vim.keymap.set [:n] "<leader>f" ":exe 'vsplit ' . substitute(substitute(expand('%'), 'fnl/', '', ''), '.fnl', '.lua', '')<CR>" {:desc "Open Lua [F]ile"})
+(tset vim.opt_local :shiftwidth 2)
+(tset vim.opt_local :tabstop 2)
+(tset vim.opt_local :softtabstop 2)
+(tset vim.opt_local :expandtab true)
