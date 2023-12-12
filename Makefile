@@ -8,21 +8,19 @@ LUA_OUT = $(patsubst fnl/%.fnl,%.lua,$(FENNEL_SRC))
 
 all: $(LUA_OUT)
 
+
 # This works
-after/%.lua: fnl/after/%.fnl
-	mkdir -p $(dir $@)
+after/%.lua: fnl/after/%.fnl | after/ftplugin
 	fennel --compile $< > $@
+
 
 # This also works
-lua/%.lua: fnl/lua/%.fnl
-	mkdir -p $(dir $@)
+lua/%.lua: fnl/lua/%.fnl | lua/custom/plugins
 	fennel --compile $< > $@
 
-# This doesn't
-%.lua: fnl/%.fnl
-	mkdir -p $(dir $@)
-	fennel --compile $< > $@
+after/ftplugin lua/custom/plugins:
+	mkdir -p $@
 
-.PHONY: clean
+.PHONY: clean all
 clean:
 	rm -rf $(LUA_OUT)
