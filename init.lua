@@ -388,8 +388,6 @@ local function live_grep_git_root()
   end
 end
 
-vim.api.nvim_create_user_command('BufOnly', ':%bd|e#', {})
-
 -- Require any custom stuff
 require('custom')
 
