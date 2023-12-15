@@ -8,7 +8,6 @@ LUA_OUT = $(patsubst fnl/%.fnl,%.lua,$(FENNEL_SRC))
 
 all: $(LUA_OUT)
 
-
 # This works
 after/%.lua: fnl/after/%.fnl | after/ftplugin
 	fennel --compile $< > $@

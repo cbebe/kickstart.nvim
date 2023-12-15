@@ -390,6 +390,9 @@ end
 
 vim.api.nvim_create_user_command('BufOnly', ':%bd|e#', {})
 
+-- Require any custom stuff
+require('custom')
+
 vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
 -- See `:help telescope.builtin`
