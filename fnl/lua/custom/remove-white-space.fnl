@@ -13,11 +13,13 @@
   [:n]
   "<leader>rs"
   (fn []
-    (vim.cmd
-      (..
-        "let _s=@/\n"
-        "%s/\\s\\+$//e\n"
-        "let @/=_s\n"
-        "nohl\n"
-        "unlet _s\n")))
+    (let [save_cursor (vim.fn.getpos ".")]
+      (vim.cmd
+        (..
+          "let _s=@/\n"
+          "%s/\\s\\+$//e\n"
+          "let @/=_s\n"
+          "nohl\n"
+          "unlet _s\n"))
+      (vim.fn.setpos "." save_cursor)))
   {:desc "Remove all trailing whitespace"})
