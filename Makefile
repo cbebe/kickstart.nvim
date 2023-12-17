@@ -8,18 +8,24 @@ LUA_OUT = $(patsubst fnl/%.fnl,%.lua,$(FENNEL_SRC))
 
 all: $(LUA_OUT)
 
-# This works
 after/%.lua: fnl/after/%.fnl | after/ftplugin
 	fennel --compile $< > $@
 
-
-# This also works
-lua/%.lua: fnl/lua/%.fnl | lua/custom/plugins
+lua/%.lua: fnl/lua/%.fnl
 	fennel --compile $< > $@
 
-after/ftplugin lua/custom/plugins:
+after/ftplugin:
 	mkdir -p $@
 
-.PHONY: clean all
+.PHONY: clean all deep-clean update
 clean:
 	rm -rf $(LUA_OUT)
+
+deep-clean:
+	rm -rf after lua
+	git restore lua
+
+update:
+	git pull
+	$(MAKE) deep-clean
+	$(MAKE) -j all
