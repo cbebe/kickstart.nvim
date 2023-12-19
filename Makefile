@@ -17,7 +17,7 @@ lua/%.lua: fnl/lua/%.fnl
 after/ftplugin:
 	mkdir -p $@
 
-.PHONY: clean all deep-clean update
+.PHONY: clean all deep-clean update fmt install-fnlfmt
 clean:
 	rm -rf $(LUA_OUT)
 
@@ -25,6 +25,19 @@ deep-clean:
 	rm -rf after lua
 	git restore lua
 
+FNL_FMT:=$(shell command -v fnlfmt 2> /dev/null)
+
+fmt: $(patsubst %,fmt-%,$(FENNEL_SRC))
+
+fmt-fnl/%.fnl: fnl/%.fnl
+ifndef FNL_FMT
+	$(error "fnlfmt is not available. pleas run `make install-fnlfmt`.")
+endif
+	fnlfmt --fix $<
+
+install-fnlfmt:
+	git clone https://git.sr.ht/~technomancy/fnlfmt fnlfmt
+	@echo 'Run `cd fnlfmt && sudo make install`'
 update:
 	git pull
 	$(MAKE) deep-clean
