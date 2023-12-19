@@ -11,8 +11,7 @@
           lua_file (get_lua_file fnl_file)]
       (vim.api.nvim_set_current_win right_win)
       (vim.cmd.edit lua_file)
-      (vim.api.nvim_win_set_buf left_win fnl_buf)
-      (vim.api.nvim_set_current_win left_win))))
+      (vim.api.nvim_win_set_buf left_win fnl_buf))))
 
 (vim.keymap.set [:n] :<leader>f open_lua_file
                 {:desc "Open Lua [F]ile" :buffer true})
