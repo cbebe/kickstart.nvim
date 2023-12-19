@@ -586,6 +586,15 @@ local servers = {
       diagnostics = { disable = { 'missing-fields' } },
     },
   },
+
+  fennel_language_server = {
+    fennel = {
+      diagnostics = {
+        -- Gets rid of annoying errors
+        globals = { 'vim' },
+      }
+    }
+  }
 }
 
 -- Setup neovim lua configuration
