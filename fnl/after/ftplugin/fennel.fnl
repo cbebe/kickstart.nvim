@@ -1,21 +1,23 @@
-(vim.keymap.set [:n] :<leader>f
-                (fn []
-                  (let [right_win (vim.api.nvim_get_current_win)
-                        fnl_buf (vim.api.nvim_get_current_buf)]
-                    (vim.cmd :split)
-                    (let [left_win (vim.api.nvim_get_current_win)
-                          fnl_file (vim.fn.expand "%")
-                          lua_file (vim.fn.substitute (vim.fn.substitute fnl_file
-                                                                         :fnl/
-                                                                         "" "")
-                                                      :.fnl :.lua "")]
-                      (vim.api.nvim_set_current_win right_win)
-                      (vim.cmd.edit lua_file)
-                      (vim.api.nvim_win_set_buf left_win fnl_buf)
-                      (vim.api.nvim_set_current_win left_win))))
-                {:desc "Open Lua [F]ile"})
+(λ get_lua_file [fnl_file]
+  (let [no_fnl (vim.fn.substitute fnl_file :fnl/ "" "")]
+    (vim.fn.substitute no_fnl :.fnl :.lua "")))
 
-(fn process_fnl_file []
+(λ open_lua_file []
+  (let [right_win (vim.api.nvim_get_current_win)
+        fnl_buf (vim.api.nvim_get_current_buf)]
+    (vim.cmd :split)
+    (let [left_win (vim.api.nvim_get_current_win)
+          fnl_file (vim.fn.expand "%")
+          lua_file (get_lua_file fnl_file)]
+      (vim.api.nvim_set_current_win right_win)
+      (vim.cmd.edit lua_file)
+      (vim.api.nvim_win_set_buf left_win fnl_buf)
+      (vim.api.nvim_set_current_win left_win))))
+
+(vim.keymap.set [:n] :<leader>f open_lua_file
+                {:desc "Open Lua [F]ile" :buffer true})
+
+(λ process_fnl_file []
   (let [fnl_file (vim.fn.expand "%")]
     (vim.cmd.write)
     (vim.cmd (.. "!make fmt-" fnl_file " " (get_lua_file fnl_file)))))

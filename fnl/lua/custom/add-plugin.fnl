@@ -1,7 +1,5 @@
-(vim.api.nvim_create_user_command :AddPlugin
-                                  (fn [opts]
-                                    (vim.cmd.edit (vim.fn.resolve (.. :fnl/lua/custom/plugins/
-                                                                      (. opts
-                                                                         :args)
-                                                                      :.fnl))))
-                                  {:nargs 1})
+(λ add_plugin [opts]
+  (let [file (.. :fnl/lua/custom/plugins/ (. opts :args) :.fnl)]
+    (vim.cmd.edit file)))
+
+(vim.api.nvim_create_user_command :AddPlugin add_plugin {:nargs 1})

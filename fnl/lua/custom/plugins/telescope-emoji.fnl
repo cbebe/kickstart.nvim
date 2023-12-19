@@ -1,5 +1,7 @@
-(local tbl [:xiyaowong/telescope-emoji.nvim])
-(tset tbl :config
-      (fn []
-        ((. (require :telescope) :load_extension) :emoji)))
-tbl
+(local t [:xiyaowong/telescope-emoji.nvim])
+(λ config []
+  ((. (require :telescope) :load_extension) :emoji))
+
+(tset t :config config)
+
+t
