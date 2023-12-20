@@ -4,5 +4,5 @@ test.sh
 nvim
 lazy-lock.json
 /after/ftplugin
-fnlfmt
-go-fnlfmt
+git-fnlfmt
+diff-fnlfmt
