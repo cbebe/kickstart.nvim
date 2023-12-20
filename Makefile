@@ -29,11 +29,14 @@ FNL_FMT:=$(shell command -v fnlfmt 2> /dev/null)
 
 fmt: $(patsubst %,fmt-%,$(FENNEL_SRC))
 
-fmt-fnl/%.fnl: fnl/%.fnl
+fmt-fnl/%.fnl: fnl/%.fnl go-fnlfmt
 ifndef FNL_FMT
 	$(error "fnlfmt is not available. pleas run `make install-fnlfmt`.")
 endif
-	fnlfmt --fix $<
+	./go-fnlfmt $<
+
+go-fnlfmt: diff-fmt/main.go
+	go build -o $@ $<
 
 install-fnlfmt:
 	git clone https://git.sr.ht/~technomancy/fnlfmt fnlfmt
