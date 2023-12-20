@@ -1,5 +1,5 @@
 (λ get_lua_file [fnl_file]
-  (let [no_fnl (vim.fn.substitute fnl_file :fnl/ "" "")]
+  (let [no_fnl (vim.fn.substitute fnl_file :fnl "" "")]
     (vim.fn.substitute no_fnl :.fnl :.lua "")))
 
 (λ open_lua_file []
