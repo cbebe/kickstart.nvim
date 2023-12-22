@@ -1,6 +1,7 @@
 (λ get_lua_file [fnl_file]
-  (let [no_fnl (vim.fn.substitute fnl_file :fnl "" "")]
-    (vim.fn.substitute no_fnl :.fnl :.lua "")))
+  (let [s vim.fn.substitute
+        no_fnl (s (s (s fnl_file :fnl "" "") "/" "" "") "\\" "" "")]
+    (s no_fnl :.fnl :.lua "")))
 
 (λ open_lua_file []
   (let [right_win (vim.api.nvim_get_current_win)
