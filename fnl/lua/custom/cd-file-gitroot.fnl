@@ -4,8 +4,7 @@
 
 (λ cd_git_root []
   (let [current_file (vim.api.nvim_buf_get_name 0)
-        cwd (vim.fn.getcwd)
-        current_dir (if (= "" current_file) cwd
+        current_dir (if (= "" current_file) (vim.fn.getcwd)
                         (vim.fn.fnamemodify current_file ":h"))
         gr (git_root current_dir)
         [msg dest_dir] (if (= vim.v.shell_error 0) ["" gr]
