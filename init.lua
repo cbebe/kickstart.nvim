@@ -291,6 +291,8 @@ vim.o.mouse = 'a'
 -- This is too slow!!
 -- vim.o.clipboard = 'unnamedplus'
 vim.keymap.set({ 'x' }, 'Y', '"+y', { silent = true })
+vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { silent = true })
+vim.keymap.set({ 'n', 'v', 'x' }, '<leader>P', '"+P', { silent = true })
 
 -- Enable break indent
 vim.o.breakindent = true
