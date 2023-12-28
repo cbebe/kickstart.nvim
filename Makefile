@@ -48,6 +48,7 @@ clean:
 deep-clean:
 	$(RM) after lua $(FNLFMT_GIT_DIR) $(DIFF_FMT)
 	git restore lua
+	git restore after/queries
 # ]]]
 
 # vim:foldmethod=marker foldmarker=[[[,]]]
