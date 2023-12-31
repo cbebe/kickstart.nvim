@@ -12,3 +12,8 @@
 
 (vim.keymap.set [:n] :<leader>m run_as_module
                 {:desc "Execute as [M]odule" :buffer true})
+
+(λ isort [] (vim.cmd (.. "!isort %")))
+
+(vim.api.nvim_buf_create_user_command 0 :Isort isort
+                                      {:desc "Organizes python imports"})
