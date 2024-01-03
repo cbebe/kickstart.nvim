@@ -14,6 +14,6 @@
     (k :<C-k> (λ [] (: (harpoon:list) :select 3)))
     (k :<C-l> (λ [] (: (harpoon:list) :select 4)))))
 
-(tset t :config config)
+(set t.config config)
 
 t

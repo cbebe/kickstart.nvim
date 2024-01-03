@@ -1,5 +1,5 @@
 (local t [:nvim-treesitter/playground])
-(tset t :dependencies [:nvim-treesitter/nvim-treesitter])
+(set t.dependencies [:nvim-treesitter/nvim-treesitter])
 
 (λ config []
   (let [configs (require :nvim-treesitter.configs)
@@ -22,6 +22,6 @@
                     : keybindings}]
     (configs.setup {: playground})))
 
-(tset t :config config)
+(set t.config config)
 
 t
