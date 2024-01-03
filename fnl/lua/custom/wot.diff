@@ -1,0 +1,43 @@
+diff --git a/init.lua b/init.lua
+index f70dea8..6f9b97c 100644
+--- a/init.lua
++++ b/init.lua
+@@ -533,6 +533,11 @@ vim.defer_fn(function()
+   require('mason').setup()
+   require('mason-lspconfig').setup()
+ 
++  local c3_ok, c3 = pcall(require, 'custom.c3')
++  if not c3_ok then
++    c3 = {}
++  end
++
+   -- Enable the following language servers
+   --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+   --
+@@ -542,7 +547,7 @@ vim.defer_fn(function()
+   --  If you want to override the default filetypes that your language server will attach to you can
+   --  define the property 'filetypes' to the map in question.
+   local servers = {
+-    clangd = {},
++    clangd = c3,
+     gopls = {},
+     -- pyright = {},
+     rust_analyzer = {},
+@@ -584,12 +589,16 @@ vim.defer_fn(function()
+ 
+   mason_lspconfig.setup_handlers {
+     function(server_name)
+-      require('lspconfig')[server_name].setup {
++      local cfg = {
+         capabilities = capabilities,
+         on_attach = on_attach,
+         settings = servers[server_name],
+         filetypes = (servers[server_name] or {}).filetypes,
+       }
++      if ((servers[server_name] or {}).cmd) then
++        cfg.cmd = (servers[server_name] or {}).cmd
++      end
++      require('lspconfig')[server_name].setup(cfg)
+     end,
+   }
+ 
