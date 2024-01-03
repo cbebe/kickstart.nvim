@@ -1,6 +1,6 @@
 (local t [:ThePrimeagen/harpoon])
-(tset t :branch :harpoon2)
-(tset t :requires [:nvim-lua/plenary.nvim])
+(set t.branch :harpoon2)
+(set t.dependencies [:nvim-lua/plenary.nvim])
 
 (λ config []
   (let [harpoon (require :harpoon)
