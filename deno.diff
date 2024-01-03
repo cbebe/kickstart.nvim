@@ -1,0 +1,19 @@
+diff --git a/init.lua b/init.lua
+index fcbf09f..f70dea8 100644
+--- a/init.lua
++++ b/init.lua
+@@ -461,7 +461,13 @@ end, 0)
+ vim.defer_fn(function()
+   -- [[ Configure LSP ]]
+   --  This function gets run when an LSP connects to a particular buffer.
+-  local on_attach = function(_, bufnr)
++  local on_attach = function(client, bufnr)
++    if require("lspconfig").util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
++      if client.name == "tsserver" then
++        client.stop()
++        return
++      end
++    end
+     -- NOTE: Remember that lua is a real programming language, and as such it is possible
+     -- to define small helper and utility functions so you don't have to repeat yourself
+     -- many times.
