@@ -111,6 +111,9 @@ require('lazy').setup({
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+
+      -- Treesitter
+      'ray-x/cmp-treesitter',
     },
   },
 
@@ -634,6 +637,7 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
+    { name = 'treesitter' },
   },
 }
 
