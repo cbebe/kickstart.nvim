@@ -7,7 +7,7 @@
         fnl_buf (vim.api.nvim_get_current_buf)]
     (vim.cmd :split)
     (let [top_win (vim.api.nvim_get_current_win)
-          lua_file (get_lua_file (vim.fn.expand "%"))]
+          lua_file (get_lua_file (vim.fn.expand "%:."))]
       (vim.api.nvim_set_current_win bot_win)
       (vim.cmd.edit lua_file)
       (vim.api.nvim_win_set_buf top_win fnl_buf))))
@@ -16,7 +16,7 @@
                 {:desc "Open Lua [F]ile" :buffer true})
 
 (λ process_fnl_file []
-  (let [fnl_file (vim.fn.expand "%")]
+  (let [fnl_file (vim.fn.expand "%:.")]
     (vim.cmd.write)
     (vim.cmd (.. "!make fmt-" fnl_file " " (get_lua_file fnl_file)))))
 
