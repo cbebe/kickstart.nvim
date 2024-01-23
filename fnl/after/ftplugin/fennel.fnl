@@ -12,8 +12,16 @@
       (vim.cmd.edit lua_file)
       (vim.api.nvim_win_set_buf top_win fnl_buf))))
 
-(vim.keymap.set [:n] :<leader>f open_lua_file
-                {:desc "Open Lua [F]ile" :buffer true})
+(vim.keymap.set [:n] :<leader>o open_lua_file
+                {:desc "[O]pen Lua file" :buffer true})
+
+(λ format_fennel []
+  (let [save_cursor (vim.fn.getpos ".")]
+    (vim.cmd "%!fnlfmt -")
+    (vim.fn.setpos "." save_cursor)))
+
+(vim.keymap.set [:n] :<leader>f format_fennel
+                {:desc "[F]ormat fennel file" :buffer true})
 
 (λ process_fnl_file []
   (let [fnl_file (vim.fn.expand "%:.")]

@@ -1,10 +1,3 @@
-██╗███╗   ███╗
-██║████╗ ████║
-██║██╔████╔██║
-██║██║╚██╔╝██║
-██║██║ ╚═╝ ██║
-╚═╝╚═╝     ╚═╝
-                                 
 (local t [:goolord/alpha-nvim])
 (λ config []
   (let [alpha (require :alpha)
