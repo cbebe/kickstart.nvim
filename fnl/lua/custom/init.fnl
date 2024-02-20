@@ -3,3 +3,4 @@
 (require :custom.cd-file-gitroot)
 (require :custom.add-plugin)
 (require :custom.six-tabs)
+(require :custom.fysh)
