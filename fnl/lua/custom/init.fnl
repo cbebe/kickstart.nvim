@@ -4,3 +4,4 @@
 (require :custom.add-plugin)
 (require :custom.six-tabs)
 (require :custom.fysh)
+(require :custom.extensions)
