@@ -52,7 +52,15 @@
 (vim.api.nvim_create_user_command :AddPlugin add-plugin {:nargs 1})
 
 ; Fysh Command
-(vim.keymap.set [:v] :<leader>f ":%!fysh<CR>" {:desc "[F]ysh"})
+(vim.keymap.set [:v] :<leader>f ":%!fysh-num<CR>" {:desc "[F]ysh"})
+
+; Add tree-sitter-fysh
+(local parser_config
+       ((. (require :nvim-treesitter.parsers) :get_parser_configs)))
+
+(set parser_config.fysh {:install_info {:url "https://github.com/Fysh-Fyve/tree-sitter-fysh"
+                                        :files [:src/parser.c]}
+                         :filetype :fysh})
 
 ; Add extra file extensions for detecting filetype
 (vim.filetype.add {:extension {:ll :llvm :fysh :fysh}})
@@ -72,5 +80,14 @@
 ; (vim.cmd.colorscheme :onedark)
 (load-catppuccin)
 ; ]]]
+
+(λ reset-highlight []
+  (let [active-buf (. (. (require :vim.treesitter.highlighter) :active)
+                      (vim.api.nvim_get_current_buf))]
+    (active-buf:destroy))
+  (vim.cmd.edit (vim.fn.expand "%")))
+
+(vim.api.nvim_create_user_command :ResetHighlight reset-highlight
+                                  {:desc "Resets Treesitter highlight"})
 
 ; vim:foldmethod=marker foldmarker=[[[,]]]
