@@ -1,5 +1,3 @@
-(local t [:lukas-reineke/virt-column.nvim])
-(set t.config (λ []
-                ((. (require :virt-column) :setup))))
-
-t
+{1 :lukas-reineke/virt-column.nvim
+ :config (λ []
+           ((. (require :virt-column) :setup)))}

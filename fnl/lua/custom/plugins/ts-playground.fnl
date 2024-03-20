@@ -1,6 +1,3 @@
-(local t [:nvim-treesitter/playground])
-(set t.dependencies [:nvim-treesitter/nvim-treesitter])
-
 (λ config []
   (let [configs (require :nvim-treesitter.configs)
         keybindings {:toggle_query_editor :o
@@ -22,6 +19,6 @@
                     : keybindings}]
     (configs.setup {: playground})))
 
-(set t.config config)
-
-t
+{1 :nvim-treesitter/playground
+ :dependencies [:nvim-treesitter/nvim-treesitter]
+ : config}

@@ -1,6 +1,3 @@
-(local t [:windwp/nvim-ts-autotag])
-
-(set t.config (λ []
-                ((. (require :nvim-ts-autotag) :setup))))
-
-t
+{1 :windwp/nvim-ts-autotag
+ :config (λ []
+           ((. (require :nvim-ts-autotag) :setup)))}

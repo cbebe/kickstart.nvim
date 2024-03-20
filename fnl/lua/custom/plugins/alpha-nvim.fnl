@@ -1,4 +1,3 @@
-(local t [:goolord/alpha-nvim])
 (λ config []
   (let [alpha (require :alpha)
         dashboard (require :alpha.themes.dashboard)
@@ -31,6 +30,4 @@
     (set dashboard.config.layout [dashboard.section.header])
     (alpha.setup dashboard.config)))
 
-(set t.config config)
-
-t
+{1 :goolord/alpha-nvim : config}

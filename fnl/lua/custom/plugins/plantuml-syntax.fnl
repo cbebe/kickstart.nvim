@@ -1,3 +1,1 @@
-(local t [:aklt/plantuml-syntax])
-
-t
+{1 :aklt/plantuml-syntax}

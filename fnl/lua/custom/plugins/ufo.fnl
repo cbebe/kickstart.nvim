@@ -7,9 +7,6 @@
 (set vim.opt.foldlevelstart 99)
 (set vim.opt.foldenable true)
 
-(local t [:kevinhwang91/nvim-ufo])
-(set t.dependencies [:kevinhwang91/promise-async])
-
 (λ config []
   (let [capabilities (vim.lsp.protocol.make_client_capabilities)
         lspconfig (require :lspconfig)]
@@ -22,6 +19,4 @@
   (let [ufo (require :ufo)]
     (ufo.setup)))
 
-(set t.config config)
-
-t
+{1 :kevinhwang91/nvim-ufo :dependencies [:kevinhwang91/promise-async] : config}
