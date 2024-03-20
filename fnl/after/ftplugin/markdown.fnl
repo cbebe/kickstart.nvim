@@ -1,7 +1,7 @@
-(λ format_markdown []
-  (let [save_cursor (vim.fn.getpos ".")]
+(λ format-markdown []
+  (let [save-cursor (vim.fn.getpos ".")]
     (vim.cmd "%!deno fmt --ext md -")
-    (vim.fn.setpos "." save_cursor)))
+    (vim.fn.setpos "." save-cursor)))
 
-(vim.keymap.set [:n] :<leader>f format_markdown
+(vim.keymap.set [:n] :<leader>f format-markdown
                 {:desc "[F]ormat buffer" :buffer true})

@@ -4,13 +4,13 @@
 (vim.keymap.set [:n] :<leader>x ":w | !python %<CR>"
                 {:desc "E[X]ecute script" :buffer true})
 
-(λ run_as_module []
+(λ run-as-module []
   (let [s vim.fn.substitute
         mod (s (s (s (vim.fn.expand "%") :.py "" "") "/" "." :g) "\\" "." :g)
         output (vim.fn.system (.. "python -m " mod))]
     (vim.api.nvim_echo [[output]] false {})))
 
-(vim.keymap.set [:n] :<leader>m run_as_module
+(vim.keymap.set [:n] :<leader>m run-as-module
                 {:desc "Execute as [M]odule" :buffer true})
 
 (λ isort [] (vim.cmd (.. "!isort %")))

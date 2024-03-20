@@ -3,12 +3,12 @@
 (set vim.opt_local.softtabstop 2)
 (set vim.opt_local.expandtab true)
 
-(λ format_js []
-  (let [save_cursor (vim.fn.getpos ".")]
+(λ format-js []
+  (let [save-cursor (vim.fn.getpos ".")]
     (vim.cmd "%!deno fmt --ext js -")
-    (vim.fn.setpos "." save_cursor)))
+    (vim.fn.setpos "." save-cursor)))
 
-(vim.keymap.set [:n] :<leader>f format_js
+(vim.keymap.set [:n] :<leader>f format-js
                 {:desc "[F]ormat buffer" :buffer true})
 
 (λ generate []

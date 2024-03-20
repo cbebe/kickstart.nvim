@@ -12,8 +12,8 @@
         lspconfig (require :lspconfig)]
     (set capabilities.textDocument.foldingRange
          {:dynamicRegistration false :lineFoldingOnly true})
-    (let [language_servers (lspconfig.util.available_servers)]
-      (each [_ ls (ipairs language_servers)]
+    (let [language-servers (lspconfig.util.available_servers)]
+      (each [_ ls (ipairs language-servers)]
         (let [server (. lspconfig ls)]
           (server.setup {: capabilities})))))
   (let [ufo (require :ufo)]

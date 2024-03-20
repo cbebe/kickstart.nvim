@@ -54,14 +54,6 @@
 ; Fysh Command
 (vim.keymap.set [:v] :<leader>f ":%!fysh-num<CR>" {:desc "[F]ysh"})
 
-; Add tree-sitter-fysh
-(local parser_config
-       ((. (require :nvim-treesitter.parsers) :get_parser_configs)))
-
-(set parser_config.fysh {:install_info {:url "https://github.com/Fysh-Fyve/tree-sitter-fysh"
-                                        :files [:src/parser.c]}
-                         :filetype :fysh})
-
 ; Add extra file extensions for detecting filetype
 (vim.filetype.add {:extension {:ll :llvm :fysh :fysh}})
 

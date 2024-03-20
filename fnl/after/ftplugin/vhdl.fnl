@@ -1,31 +1,31 @@
-(λ is_tb [file] (= (file:sub -3) :_tb))
+(λ is-tb [file] (= (file:sub -3) :_tb))
 
 (set _G.vhdl_pos (match _G.vhdl_pos nil {} p p))
 
-(λ switch_file []
+(λ switch-file []
   (let [file (vim.fn.expand "%:t:r")
-        go_to (if (is_tb file) [:rtl/core/ (file:sub 0 (- (length file) 3))]
+        go-to (if (is-tb file) [:rtl/core/ (file:sub 0 (- (length file) 3))]
                   [:rtl/test/ (.. file :_tb)])
-        go_to_key (. go_to 2)
-        go_to_file (.. (. go_to 1) (. go_to 2) :.vhd)
-        save_cursor (vim.fn.getpos ".")
-        next_cursor (match (. _G.vhdl_pos go_to_key)
-                      nil save_cursor
+        go-to-key (. go-to 2)
+        go-to-file (.. (. go-to 1) (. go-to 2) :.vhd)
+        save-cursor (vim.fn.getpos ".")
+        next-cursor (match (. _G.vhdl_pos go-to-key)
+                      nil save-cursor
                       nc nc)]
-    (tset _G.vhdl_pos file save_cursor)
-    (vim.cmd.edit go_to_file)
-    (vim.fn.setpos "." next_cursor)))
+    (tset _G.vhdl_pos file save-cursor)
+    (vim.cmd.edit go-to-file)
+    (vim.fn.setpos "." next-cursor)))
 
-(vim.keymap.set [:n] :<leader>dd switch_file
+(vim.keymap.set [:n] :<leader>dd switch-file
                 {:desc "Open [I]mplementation" :buffer true})
 
-(λ run_test []
+(λ run-test []
   (let [file (vim.fn.expand "%:t:r")
-        test_bench (if (is_tb file) file (.. file :_tb))]
+        test-bench (if (is-tb file) file (.. file :_tb))]
     (vim.cmd.write)
-    (vim.cmd (.. "!make " test_bench))))
+    (vim.cmd (.. "!make " test-bench))))
 
-(vim.keymap.set [:n] :<leader>t run_test {:desc "[T]est file" :buffer true})
+(vim.keymap.set [:n] :<leader>t run-test {:desc "[T]est file" :buffer true})
 
 (λ fmt []
   (vim.cmd.write)
@@ -35,11 +35,11 @@
                                       {:desc "Format VHDL with Emacs"})
 
 (let [parsers (require :nvim-treesitter.parsers)
-      parser_configs (parsers.get_parser_configs)
+      parser-configs (parsers.get_parser_configs)
       config {:install_info {:url "https://github.com/alemuller/tree-sitter-vhdl"
                              :files [:src/parser.c]
                              :branch :main}}]
-  (set parser_configs.vhdl config))
+  (set parser-configs.vhdl config))
 
 (vim.keymap.set [:n] :<leader>I
                 "ouse std.textio.all;<CR>variable l : line;<Esc>"
