@@ -20,5 +20,6 @@
     (configs.setup {: playground})))
 
 {1 :nvim-treesitter/playground
+ :cmd :TSPlaygroundToggle
  :dependencies [:nvim-treesitter/nvim-treesitter]
  : config}

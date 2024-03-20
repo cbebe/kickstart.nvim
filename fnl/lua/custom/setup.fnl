@@ -33,7 +33,7 @@
                              ;; Detect tabstop and shiftwidth automatically
                              :tpope/vim-sleuth
                              ;; Startup time
-                             :dstein64/vim-startuptime
+                             {1 :dstein64/vim-startuptime :cmd :StartupTime}
                              ;; NOTE: This is where your plugins related to LSP can be installed.
                              ;;  The configuration is done below. Search for lspconfig to find it below.
                              {;; LSP Configuration & Plugins
