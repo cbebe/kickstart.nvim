@@ -5,3 +5,5 @@
 (require :custom.six-tabs)
 (require :custom.fysh)
 (require :custom.extensions)
+(require :custom.main)
+(require :custom.polish)
