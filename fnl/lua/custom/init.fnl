@@ -1,3 +1,5 @@
+(require :custom.setup)
+
 ; [[[ Remove whitespace
 (vim.cmd (.. "highlight ExtraWhitespace ctermbg=red guibg=red\n"
              "match ExtraWhitespace /\\s\\+$/"))
