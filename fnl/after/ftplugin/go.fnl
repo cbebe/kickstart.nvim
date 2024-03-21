@@ -8,3 +8,6 @@
 ; Stolen from Prime
 (vim.keymap.set [:n] :<leader>l "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
                 {:desc "if err != ni[l]" :buffer true})
+
+(vim.keymap.set [:n] :<leader>t ":w | !go test ./...<CR>"
+                {:desc "[T]est all" :buffer true})
