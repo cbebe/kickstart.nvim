@@ -4,4 +4,7 @@
         cmp (require :cmp)]
     (cmp.event:on :confirm_done (cmp-autopairs.on_confirm_done))))
 
-{1 :windwp/nvim-autopairs :dependencies [:hrsh7th/nvim-cmp] : config}
+{1 :windwp/nvim-autopairs
+ :event :VeryLazy
+ :dependencies [:hrsh7th/nvim-cmp]
+ : config}
