@@ -1,38 +1,36 @@
 {;; Adds git related signs to the gutter, as well as utilities for managing changes
  1 :lewis6991/gitsigns.nvim
- :opts {:on_attach (fn [bufnr]
+ :opts {:on_attach (λ [bufnr]
                      (local gs package.loaded.gitsigns)
-
-                     (fn map [mode l r ?opts]
+                     (λ map [mode l r ?opts]
                        (let [opts (if ?opts ?opts {})]
                          (set opts.buffer bufnr)
                          (vim.keymap.set mode l r opts)))
-
                      ;; Navigation
                      (map [:n :v] "]c"
-                          (fn []
+                          (λ []
                             (when vim.wo.diff
                               (lua "return \"]c\""))
-                            (vim.schedule (fn []
+                            (vim.schedule (λ []
                                             (gs.next_hunk)))
                             :<Ignore>)
                           {:desc "Jump to next hunk" :expr true})
                      (map [:n :v] "[c"
-                          (fn []
+                          (λ []
                             (when vim.wo.diff
                               (lua "return \"[c\""))
-                            (vim.schedule (fn []
+                            (vim.schedule (λ []
                                             (gs.prev_hunk)))
                             :<Ignore>)
                           {:desc "Jump to previous hunk" :expr true})
                      ;; Actions
                      ;; visual mode
                      (map :v :<leader>hs
-                          (fn []
+                          (λ []
                             (gs.stage_hunk [(vim.fn.line ".") (vim.fn.line :v)]))
                           {:desc "stage git hunk"})
                      (map :v :<leader>hr
-                          (fn []
+                          (λ []
                             (gs.reset_hunk [(vim.fn.line ".") (vim.fn.line :v)]))
                           {:desc "reset git hunk"})
                      ;; normal mode
@@ -47,12 +45,12 @@
                      (map :n :<leader>hp gs.preview_hunk
                           {:desc "preview git hunk"})
                      (map :n :<leader>hb
-                          (fn []
+                          (λ []
                             (gs.blame_line {:full false}))
                           {:desc "git blame line"})
                      (map :n :<leader>hd gs.diffthis
                           {:desc "git diff against index"})
-                     (map :n :<leader>hD (fn [] (gs.diffthis "~"))
+                     (map :n :<leader>hD (λ [] (gs.diffthis "~"))
                           {:desc "git diff against last commit"})
                      ;; Toggles
                      (map :n :<leader>tb gs.toggle_current_line_blame

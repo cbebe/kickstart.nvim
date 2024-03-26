@@ -119,7 +119,7 @@
        (vim.api.nvim_create_augroup :YankHighlight {:clear true}))
 
 (vim.api.nvim_create_autocmd :TextYankPost
-                             {:callback (fn [] (vim.highlight.on_yank))
+                             {:callback (λ [] (vim.highlight.on_yank))
                               :group highlight-group
                               :pattern "*"})
 

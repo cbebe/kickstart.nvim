@@ -1,12 +1,20 @@
 ;; See `:help telescope.builtin`
-(vim.keymap.set :n :<leader>? (. (require :telescope.builtin) :oldfiles)
-                {:desc "[?] Find recently opened files"})
+(λ builtin [fun key desc]
+  (vim.keymap.set :n key (. (require :telescope.builtin) fun) {: desc}))
 
-(vim.keymap.set :n :<leader><space> (. (require :telescope.builtin) :buffers)
-                {:desc "[ ] Find existing buffers"})
+(builtin :oldfiles :<leader>? "[?] Find recently opened files")
+(builtin :buffers :<leader><space> "[ ] Find existing buffers")
+(builtin :builtin :<leader>ss "[S]earch [S]elect Telescope")
+(builtin :git_files :<leader>gf "Search [G]it [F]iles")
+(builtin :find_files :<leader>sf "[S]earch [F]iles")
+(builtin :help_tags :<leader>sh "[S]earch [H]elp")
+(builtin :grep_string :<leader>sw "[S]earch current [W]ord")
+(builtin :live_grep :<leader>sg "[S]earch by [G]rep")
+(builtin :diagnostics :<leader>sd "[S]earch [D]iagnostics")
+(builtin :resume :<leader>sr "[S]earch [R]esume")
 
 (vim.keymap.set :n :<leader>/
-                (fn []
+                (λ []
                   (let [fuzzy-find (. (require :telescope.builtin)
                                       :current_buffer_fuzzy_find)
                         get-dropdown (. (require :telescope.themes)
@@ -15,53 +23,29 @@
                                               {:previewer false :winblend 10}))))
                 {:desc "[/] Fuzzily search in current buffer"})
 
-(fn telescope-live-grep-open-files []
+(λ telescope-live-grep-open-files []
   ((. (require :telescope.builtin) :live_grep) {:grep_open_files true
                                                 :prompt_title "Live Grep in Open Files"}))
 
 (vim.keymap.set :n :<leader>s/ telescope-live-grep-open-files
                 {:desc "[S]earch [/] in Open Files"})
 
-(vim.keymap.set :n :<leader>ss (. (require :telescope.builtin) :builtin)
-                {:desc "[S]earch [S]elect Telescope"})
-
-(vim.keymap.set :n :<leader>gf (. (require :telescope.builtin) :git_files)
-                {:desc "Search [G]it [F]iles"})
-
-(vim.keymap.set :n :<leader>sf (. (require :telescope.builtin) :find_files)
-                {:desc "[S]earch [F]iles"})
-
 (vim.keymap.set :n :<leader>sF
-                (fn []
+                (λ []
                   (let [find-files (. (require :telescope.builtin) :find_files)]
                     (find-files {:find_command [:rg :--files :-uuu :-g :!.git]})))
                 {:desc "[S]earch [F]iles including hidden"})
 
-(vim.keymap.set :n :<leader>sh (. (require :telescope.builtin) :help_tags)
-                {:desc "[S]earch [H]elp"})
-
-(vim.keymap.set :n :<leader>sw (. (require :telescope.builtin) :grep_string)
-                {:desc "[S]earch current [W]ord"})
-
-(vim.keymap.set :n :<leader>sg (. (require :telescope.builtin) :live_grep)
-                {:desc "[S]earch by [G]rep"})
-
 (vim.keymap.set :n :<leader>sG
-                (fn []
+                (λ []
                   (let [live-grep (. (require :telescope.builtin) :live_grep)]
                     (live-grep {:find_command [:rg :-uuu :-g :!.git]})))
                 {:desc "[S]earch by [G]rep including hidden"})
 
-(vim.keymap.set :n :<leader>sd (. (require :telescope.builtin) :diagnostics)
-                {:desc "[S]earch [D]iagnostics"})
-
-(vim.keymap.set :n :<leader>sr (. (require :telescope.builtin) :resume)
-                {:desc "[S]earch [R]esume"})
-
 ;; [[ Configure Treesitter ]]
 ;; See `:help nvim-treesitter`
 ;; Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
-(vim.defer_fn (fn []
+(vim.defer_fn (λ []
                 (let [setup (. (require :nvim-treesitter.configs) :setup)
                       to-move {:enable true
                                :goto_next_end {"]M" "@function.outer"
@@ -168,7 +152,7 @@
 ;; Ensure the servers above are installed
 (local mason-lspconfig (require :mason-lspconfig))
 (mason-lspconfig.setup {:ensure_installed (vim.tbl_keys servers)})
-(fn handler [server-name]
+(λ handler [server-name]
   (let [setup (. (. (require :lspconfig) server-name) :setup)
         filetypes (. (or (. servers server-name) {}) :filetypes)]
     (setup {: capabilities
@@ -191,20 +175,20 @@
             :<C-p> (cmp.mapping.select_prev_item)
             :<CR> (cmp.mapping.confirm {:behavior cmp.ConfirmBehavior.Replace
                                         :select true})
-            :<S-Tab> (cmp.mapping (fn [fallback]
+            :<S-Tab> (cmp.mapping (λ [?fallback]
                                     (if (cmp.visible) (cmp.select_prev_item)
                                         (luasnip.locally_jumpable (- 1)) (luasnip.jump (- 1))
-                                        (fallback)))
+                                        (?fallback)))
                                   [:i :s])
-            :<Tab> (cmp.mapping (fn [fallback]
+            :<Tab> (cmp.mapping (λ [?fallback]
                                   (if (cmp.visible) (cmp.select_next_item)
                                       (luasnip.expand_or_locally_jumpable) (luasnip.expand_or_jump)
-                                      (fallback)))
+                                      (?fallback)))
                                 [:i :s])}
       mapping (cmp.mapping.preset.insert keys)]
   (cmp.setup {:completion {:completeopt "menu,menuone,noinsert"}
               : mapping
-              :snippet {:expand (fn [args] (luasnip.lsp_expand args.body))}
+              :snippet {:expand (λ [args] (luasnip.lsp_expand args.body))}
               :sources [{:name :nvim_lsp}
                         {:name :luasnip}
                         {:name :path}

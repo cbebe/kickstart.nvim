@@ -1,17 +1,15 @@
 ;; [[ Configure LSP ]]
 ;;  This function gets run when an LSP connects to a particular buffer.
-(fn on-attach [_ bufnr]
+(λ on-attach [_ ?bufnr]
   ;; NOTE: Remember that lua is a real programming language, and as such it is possible
   ;; to define small helper and utility functions so you don't have to repeat yourself
   ;; many times.
   ;;
   ;; In this case, we create a function that lets us more easily define mappings specific
   ;; for LSP related items. It sets the mode, buffer and description for us each time.
-
-  (fn nmap [keys func ?desc]
+  (λ nmap [keys func ?desc]
     (let [desc (if ?desc (.. "LSP: " ?desc) nil)]
-      (vim.keymap.set :n keys func {:buffer bufnr : desc})))
-
+      (vim.keymap.set :n keys func {:buffer ?bufnr : desc})))
   (nmap :<leader>rn vim.lsp.buf.rename "[R]e[n]ame")
   (nmap :<leader>ca vim.lsp.buf.code_action "[C]ode [A]ction")
   (nmap :gd (. (require :telescope.builtin) :lsp_definitions)
@@ -36,12 +34,12 @@
   (nmap :<leader>wr vim.lsp.buf.remove_workspace_folder
         "[W]orkspace [R]emove Folder")
   (nmap :<leader>wl
-        (fn []
+        (λ []
           (print (vim.inspect (vim.lsp.buf.list_workspace_folders))))
         "[W]orkspace [L]ist Folders")
   ;; Create a command `:Format` local to the LSP buffer
-  (vim.api.nvim_buf_create_user_command bufnr :Format
-                                        (fn [_] (vim.lsp.buf.format))
+  (vim.api.nvim_buf_create_user_command ?bufnr :Format
+                                        (λ [_] (vim.lsp.buf.format))
                                         {:desc "Format current buffer with LSP"}))
 
 on-attach
