@@ -112,6 +112,7 @@
                           ;; For example:
                           ;; :playground { :enable true }
                           :modules {}
+                          :autotag {:enable true}
                           ;; Install languages synchronously (only applied to `ensure_installed`)
                           :sync_install false
                           :textobjects {:move to-move :select to-select}})))
