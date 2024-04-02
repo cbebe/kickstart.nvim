@@ -52,7 +52,7 @@
 (vim.api.nvim_create_user_command :AddPlugin add-plugin {:nargs 1})
 
 ; Fysh Command
-(vim.keymap.set [:v] :<leader>f ":%!fysh-num<CR>" {:desc "[F]ysh"})
+; (vim.keymap.set [:v] :<leader>f ":%!fysh-num<CR>" {:desc "[F]ysh"})
 
 ; Add extra file extensions for detecting filetype
 (vim.filetype.add {:extension {:ll :llvm :fysh :fysh}})
