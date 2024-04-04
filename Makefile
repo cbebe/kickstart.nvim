@@ -35,11 +35,12 @@ endif
 $(DIFF_FMT): diff-fmt/main.go
 	go build -o $@ $<
 
-.PHONY: highlights
-highlights: after/queries/fysh/highlights.scm
+.PHONY: queries
+queries: after/queries/fysh/highlights.scm after/queries/fysh/injections.scm
 
-after/queries/fysh/highlights.scm:
-	wget -O $@ https://raw.githubusercontent.com/Fysh-Fyve/tree-sitter-fysh/master/queries/highlights.scm
+REPO := Fysh-Fyve/tree-sitter-fysh
+after/queries/fysh/%.scm:
+	wget -O $@ https://raw.githubusercontent.com/$(REPO)/master/queries/$(notdir $(basename $@).scm)
 
 install-fnlfmt:
 	git clone https://git.sr.ht/~technomancy/fnlfmt $(FNLFMT_GIT_DIR)
