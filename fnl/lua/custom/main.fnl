@@ -167,7 +167,7 @@
               :<C-f> (m.scroll_docs 4)
               :<C-n> (m.select_next_item)
               :<C-p> (m.select_prev_item)
-              :<CR> (m.confirm {:behavior cmp.ConfirmBehavior.Insert
+              :<CR> (m.confirm {:behavior cmp.ConfirmBehavior.Replace
                                 :select true})
               :<S-Tab> (m (λ [?fallback]
                             (if (cmp.visible) (cmp.select_prev_item)
