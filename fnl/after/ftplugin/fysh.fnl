@@ -11,12 +11,11 @@
     (set client.server_capabilities.semanticTokensProvider nil)
     (on-attach client ?bufnr)))
 
-(local client (vim.lsp.start_client {:name :fyshls
-                                     :cmd [:fyshls]
-                                     :on_attach on-attach}))
-
-(if (not client) (vim.notify "error creating client")
-    (vim.lsp.buf_attach_client 0 client))
+(let [client (vim.lsp.start_client {:name :fyshls
+                                    :cmd [:fyshls]
+                                    :on_attach on-attach})]
+  (if (not client) (vim.notify "error creating client")
+      (vim.lsp.buf_attach_client 0 client)))
 
 (λ use_fysh []
   (let [parser-config ((. (require :nvim-treesitter.parsers)

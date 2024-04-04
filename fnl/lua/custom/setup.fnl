@@ -7,17 +7,16 @@
 ;; [[ Install `lazy.nvim` plugin manager ]]
 ;;    https://github.com/folke/lazy.nvim
 ;;    `:help lazy.nvim.txt` for more info
-(local lazypath (.. (vim.fn.stdpath :data) :/lazy/lazy.nvim))
-(when (not (vim.loop.fs_stat lazypath))
-  (vim.fn.system [:git
-                  :clone
-                  "--filter=blob:none"
-                  "https://github.com/folke/lazy.nvim.git"
-                  ;; latest stable release
-                  :--branch=stable
-                  lazypath]))
-
-(vim.opt.rtp:prepend lazypath)
+(let [lazypath (.. (vim.fn.stdpath :data) :/lazy/lazy.nvim)]
+  (when (not (vim.loop.fs_stat lazypath))
+    (vim.fn.system [:git
+                    :clone
+                    "--filter=blob:none"
+                    "https://github.com/folke/lazy.nvim.git"
+                    ;; latest stable release
+                    :--branch=stable
+                    lazypath]))
+  (vim.opt.rtp:prepend lazypath))
 
 ;; [[ Configure plugins ]]
 ;; NOTE: Here is where you install your plugins.
@@ -106,26 +105,25 @@
 ;; (vim.keymap.set :n :j "v:count == 0 ? 'gj' : 'j'" {:expr true :silent true})
 
 ;; Diagnostic keymaps
-(let [dg vim.diagnostic
-      map vim.keymap.set]
-  (map :n "[d" dg.goto_prev {:desc "Go to previous diagnostic message"})
-  (map :n "]d" dg.goto_next {:desc "Go to next diagnostic message"})
-  (map :n :<leader>E dg.open_float {:desc "Open floating diagnostic message"})
-  (map :n :<leader>q dg.setloclist {:desc "Open diagnostics list"}))
+(let [dg vim.diagnostic]
+  (λ map [key fun desc]
+    (vim.keymap.set :n key fun {: desc}))
+  (map "[d" dg.goto_prev "Go to previous diagnostic message")
+  (map "]d" dg.goto_next "Go to next diagnostic message")
+  (map :<leader>E dg.open_float "Open floating diagnostic message")
+  (map :<leader>q dg.setloclist "Open diagnostics list"))
 
 ;; [[ Highlight on yank ]]
 ;; See `:help vim.highlight.on_yank()`
-(local highlight-group
-       (vim.api.nvim_create_augroup :YankHighlight {:clear true}))
-
-(vim.api.nvim_create_autocmd :TextYankPost
-                             {:callback (λ [] (vim.highlight.on_yank))
-                              :group highlight-group
-                              :pattern "*"})
+(let [highlight-group (vim.api.nvim_create_augroup :YankHighlight {:clear true})]
+  (vim.api.nvim_create_autocmd :TextYankPost
+                               {:callback (λ [] (vim.highlight.on_yank))
+                                :group highlight-group
+                                :pattern "*"}))
 
 ;; [[ Configure Telescope ]]
 ;; See `:help telescope` and `:help telescope.setup()`
-((. (require :telescope) :setup) {:defaults {:mappings {:i {:<C-u> false}}}})
-
-;; Enable telescope fzf native, if installed
-(pcall (. (require :telescope) :load_extension) :fzf)
+(let [telescope (require :telescope)]
+  (telescope.setup {:defaults {:mappings {:i {:<C-u> false}}}})
+  ;; Enable telescope fzf native, if installed
+  (pcall telescope.load_extension :fzf))

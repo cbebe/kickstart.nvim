@@ -1,16 +1,8 @@
-(set vim.opt_local.shiftwidth 2)
-(set vim.opt_local.tabstop 2)
-(set vim.opt_local.softtabstop 2)
-(set vim.opt_local.expandtab true)
+((require :custom.width) 2 true)
 
-(λ format-js []
-  (let [save-cursor (vim.fn.getpos ".")]
-    (vim.cmd "%!deno fmt --ext js -")
-    (vim.fn.setpos "." save-cursor)))
+((require :custom.formatter) "deno fmt --ext js -")
 
-(vim.keymap.set [:n] :<leader>f format-js
-                {:desc "[F]ormat buffer" :buffer true})
-
+;; TS grammar auto-generate
 (λ generate []
   (when (= (vim.fn.expand "%:t") :grammar.js)
     (vim.keymap.set [:n] :<leader>t

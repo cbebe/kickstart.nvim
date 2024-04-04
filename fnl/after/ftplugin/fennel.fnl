@@ -31,7 +31,4 @@
 (vim.api.nvim_buf_create_user_command 0 :FnlProcess process-fnl-file
                                       {:desc "Formats and compiles fennel file"})
 
-(set vim.opt_local.shiftwidth 2)
-(set vim.opt_local.tabstop 2)
-(set vim.opt_local.softtabstop 2)
-(set vim.opt_local.expandtab true)
+((require :custom.width) 2 true)
