@@ -5,10 +5,15 @@
                    :filetype :fysh}]
   (set parser-config.fysh fysh-config))
 
-(local client
-       (vim.lsp.start_client {:name :fyshls
-                              :cmd [:fyshls]
-                              :on_attach (require :custom.on-attach)}))
+(λ on-attach [client ?bufnr]
+  (let [on-attach (require :custom.on-attach)]
+    ;; Disable semantic tokens
+    (set client.server_capabilities.semanticTokensProvider nil)
+    (on-attach client ?bufnr)))
+
+(local client (vim.lsp.start_client {:name :fyshls
+                                     :cmd [:fyshls]
+                                     :on_attach on-attach}))
 
 (if (not client) (vim.notify "error creating client")
     (vim.lsp.buf_attach_client 0 client))
