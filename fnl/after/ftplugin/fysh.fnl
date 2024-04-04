@@ -24,3 +24,6 @@
 
 (vim.api.nvim_buf_create_user_command 0 :LocalTS use_fysh
                                       {:desc "Install local tree-sitter"})
+
+(set vim.opt_local.commentstring "><//>%s")
+(let [ft (require :Comment.ft)] (ft.set :fysh ["><//>%s" "></*>%s<*/><"]))
