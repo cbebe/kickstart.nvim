@@ -60,7 +60,7 @@
 (set vim.wo.relativenumber true)
 
 ;; Enable mouse mode
-(set vim.o.mouse :a)
+; (set vim.o.mouse :a)
 
 ;; Sync clipboard between OS and Neovim.
 ;;  Remove this option if you want your OS clipboard to remain independent.
