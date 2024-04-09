@@ -82,4 +82,8 @@
 (vim.api.nvim_create_user_command :ResetHighlight reset-highlight
                                   {:desc "Resets Treesitter highlight"})
 
+(vim.keymap.set :n :<leader>S
+                "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>"
+                {:desc "Reload luasnip"})
+
 ; vim:foldmethod=marker foldmarker=[[[,]]]

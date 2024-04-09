@@ -11,13 +11,16 @@ MKDIR := mkdir -p
 
 all: $(LUA_OUT)
 
-after/%.lua: fnl/after/%.fnl | after/ftplugin
+after/%.lua: fnl/after/%.fnl | after/ftplugin after/plugin
 	fennel --compile $< > $@
 
 lua/%.lua: fnl/lua/%.fnl
 	fennel --compile $< > $@
 
 after/ftplugin:
+	$(MKDIR) $@
+
+after/plugin:
 	$(MKDIR) $@
 
 # [[[ Formatting Stuff

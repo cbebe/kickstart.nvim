@@ -159,8 +159,14 @@
 ;; See `:help cmp`
 (let [cmp (require :cmp)
       ls (require :luasnip)
+      types (require :luasnip.util.types)
       m cmp.mapping]
   ((. (require :luasnip.loaders.from_vscode) :lazy_load))
+  (ls.config.set_config {:history true
+                         :updateevents "TextChanged,TextChangedI"
+                         :enable_autosnippets true
+                         :ext_opts {types.choiceNode {:active {:virt_text [["<-"
+                                                                            :Error]]}}}})
   (ls.config.setup {})
   (let [keys {:<C-Space> (m.complete {})
               :<C-b> (m.scroll_docs (- 4))
