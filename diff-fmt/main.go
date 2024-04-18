@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 )
 
 func deepCompare(sf, df io.Reader) bool {
@@ -32,7 +31,7 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("error opening file: %v", err)
 	}
-	cmd := exec.Command("fnlfmt", "-")
+	cmd := format()
 	cmd.Stdin = bytes.NewBuffer(bytes.Clone(b))
 
 	// If you're formatting a source file that doesn't fit into memory,

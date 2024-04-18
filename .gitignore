@@ -3,7 +3,7 @@ test.sh
 .luarc.json
 nvim
 lazy-lock.json
-/after/ftplugin
-/after/plugin
 git-fnlfmt
 diff-fnlfmt
+fnlfmt
+diff-fmt/diff-fnlfmt.exe

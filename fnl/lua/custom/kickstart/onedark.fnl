@@ -3,4 +3,5 @@
  :config (λ []
            ;; (set vim.cmd.colorscheme "onedark")
            )
+ :enable false
  :priority 1000}
