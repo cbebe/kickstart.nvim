@@ -1,15 +1,19 @@
 (require :custom.setup)
 
 ; [[[ Remove whitespace
-(vim.cmd (.. "highlight ExtraWhitespace ctermbg=red guibg=red\n"
-             "match ExtraWhitespace /\\s\\+$/"))
+(vim.cmd "highlight ExtraWhitespace ctermbg=red guibg=red\n")
 
 (let [grp (vim.api.nvim_create_augroup :RenderWhiteSpace {:clear true})
       au vim.api.nvim_create_autocmd]
-  (au :BufWinEnter {:command "match ExtraWhitespace /\\s\\+$/" :group grp})
-  (au :InsertEnter {:command "match ExtraWhitespace /\\s\\+\\%#\\@<!$/"
-                    :group grp})
-  (au :InsertLeave {:command "match ExtraWhitespace /\\s\\+$/" :group grp})
+  (λ match-whitespace [cmd]
+    (let [buftype (vim.api.nvim_buf_get_option (vim.api.nvim_get_current_buf)
+                                               :buftype)]
+      (if (= buftype "")
+          (if (= cmd :InsertEnter)
+              (vim.cmd "match ExtraWhitespace /\\s\\+\\%#\\@<!$/")
+              (vim.cmd "match ExtraWhitespace /\\s\\+$/")))))
+  (au [:BufWinEnter :InsertEnter :InsertLeave]
+      {:callback match-whitespace :group grp})
   (au :BufWinLeave {:command "call clearmatches()" :group grp}))
 
 (λ rm-ws []
