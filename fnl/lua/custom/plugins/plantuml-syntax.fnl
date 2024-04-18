@@ -1,1 +1,1 @@
-{1 :aklt/plantuml-syntax}
+{1 :aklt/plantuml-syntax :ft :plantuml}
