@@ -59,7 +59,7 @@
 ; (vim.keymap.set [:v] :<leader>f ":%!fysh-num<CR>" {:desc "[F]ysh"})
 
 ; Add extra file extensions for detecting filetype
-(vim.filetype.add {:extension {:ll :llvm :fysh :fysh}})
+(vim.filetype.add {:extension {:ll :llvm :fysh :fysh :templ :templ}})
 
 (require :custom.main)
 
