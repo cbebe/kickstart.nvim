@@ -1,1 +1,2 @@
-(vim.keymap.set [:n] :<leader>x ":!%<CR>" {:desc "E[x]ecute" :buffer true})
+(vim.keymap.set [:n] :<leader>x (.. ":!" (vim.fn.expand "%:p") :<CR>)
+                {:desc "E[x]ecute" :buffer true})
