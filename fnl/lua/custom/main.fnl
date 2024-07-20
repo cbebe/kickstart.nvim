@@ -99,7 +99,6 @@
             ;; For example:
             ;; :playground { :enable true }
             :modules {}
-            :autotag {:enable true}
             ;; Install languages synchronously (only applied to `ensure_installed`)
             :sync_install false
             :textobjects {:move obj-move :select obj-select}})))
@@ -107,22 +106,20 @@
 ;; Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 (vim.defer_fn tree-sitter-config 0)
 
-(let [register (. (require :which-key) :register)]
-  (λ key [name]
-    {:_ :which_key_ignore : name})
+(let [wk (. (require :which-key))]
   ;; document existing key chains
-  (register {:<leader>c (key "[C]ode")
-             :<leader>d (key "[D]ocument")
-             :<leader>g (key "[G]it")
-             :<leader>h (key "Git [H]unk")
-             :<leader>r (key "[R]ename")
-             :<leader>s (key "[S]earch")
-             :<leader>t (key "[T]oggle")
-             :<leader>w (key "[W]orkspace")})
+  (wk.add [{1 :<leader>c :group "[C]ode"}
+           {1 :<leader>d :group "[D]ocument"}
+           {1 :<leader>g :group "[G]it"}
+           {1 :<leader>h :group "Git [H]unk"}
+           {1 :<leader>r :group "[R]ename"}
+           {1 :<leader>s :group "[S]earch"}
+           {1 :<leader>t :group "[T]oggle"}
+           {1 :<leader>w :group "[W]orkspace"}])
   ;; register which-key VISUAL mode
   ;; required for visual <leader>hs (hunk stage) to work
-  (register {:<leader> {:name "VISUAL <leader>"} :<leader>h ["Git [H]unk"]}
-            {:mode :v}))
+  (wk.add [{1 :<leader> :group "VISUAL <leader>" :mode :v}
+           {1 :<leader>h :desc "Git [H]unk" :mode :v}]))
 
 ;; mason-lspconfig requires that these setup functions are called in this order
 ;; before setting up the servers.
