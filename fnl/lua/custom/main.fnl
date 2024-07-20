@@ -20,22 +20,33 @@
          (fuzzy-find (get-dropdown ;; You can pass additional configuration to telescope to change theme, layout, etc.
                                    {:previewer false :winblend 10}))))
      {:desc "[/] Fuzzily search in current buffer"})
+  (λ hidden [] [:rg :-uuu :-g :!.git])
+  (λ lg [] (. (require :telescope.builtin) :live_grep))
   (s :n :<leader>s/
      (λ []
-       (let [live-grep (. (require :telescope.builtin) :live_grep)]
-         (live-grep {:grep_open_files true
-                     :prompt_title "Live Grep in Open Files"})))
+       ((lg) {:grep_open_files true :prompt_title "Live Grep in Open Files"}))
      {:desc "[S]earch [/] in Open Files"})
   (s :n :<leader>sF
      (λ []
        (let [find-files (. (require :telescope.builtin) :find_files)]
          (find-files {:find_command [:rg :--files :-uuu :-g :!.git]})))
      {:desc "[S]earch [F]iles including hidden"})
-  (s :n :<leader>sG
+  (s :n :<leader>sG (λ []
+                      ((lg) {:find_command (hidden)}))
+     {:desc "[S]earch by [G]rep including hidden"})
+  (λ get-selection []
+    (vim.fn.getregion (vim.fn.getpos ".") (vim.fn.getpos :v)
+                      {:mode (vim.fn.mode)}))
+  (s :v :<leader>sg
      (λ []
-       (let [live-grep (. (require :telescope.builtin) :live_grep)]
-         (live-grep {:find_command [:rg :-uuu :-g :!.git]})))
-     {:desc "[S]earch by [G]rep including hidden"}))
+       ((lg) {:find_command [:rg :--fixed-strings]
+              :default_text (table.concat (get-selection))}))
+     {:desc "[S]earch by [G]rep (visual)"})
+  (s :v :<leader>sG
+     (λ []
+       ((lg) {:find_command (table.insert (hidden) :--fixed-strings)
+              :default_text (table.concat (get-selection))}))
+     {:desc "[S]earch by [G]rep including hidden (visual)"}))
 
 ;; [[ Configure Treesitter ]]
 ;; See `:help nvim-treesitter`
