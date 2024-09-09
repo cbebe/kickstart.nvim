@@ -155,10 +155,7 @@
     ;; Ensure the servers above are installed
     (mason-lspconfig.setup {:ensure_installed (vim.tbl_keys servers)})
     (λ handler [server-name]
-      ;; Workaround for deprecated tsserver
-      ;; https://github.com/neovim/nvim-lspconfig/pull/3232
-      (let [name (if (= server-name :tsserver) :ts_ls server-name)
-            setup (. (. (require :lspconfig) name) :setup)
+      (let [setup (. (. (require :lspconfig) server-name) :setup)
             filetypes (. (or (. servers server-name) {}) :filetypes)]
         (setup {: capabilities
                 : filetypes
