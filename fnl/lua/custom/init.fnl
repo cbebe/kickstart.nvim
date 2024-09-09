@@ -62,6 +62,7 @@
 (vim.filetype.add {:extension {:ll :llvm :fysh :fysh :templ :templ}})
 
 (require :custom.main)
+(require :custom.large-file)
 
 ; [[[ Polish
 (set vim.wo.colorcolumn "80,100")

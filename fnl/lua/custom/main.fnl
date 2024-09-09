@@ -144,7 +144,7 @@
                               :telemetry {:enable false}
                               :workspace {:checkThirdParty false}}}
                :rust_analyzer {}
-               :tsserver {}}]
+               :ts_ls {}}]
   ;; Setup neovim lua configuration
   ((. (require :neodev) :setup))
   (let [
